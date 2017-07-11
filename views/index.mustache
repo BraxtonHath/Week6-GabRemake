@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+ <html>
+   <head>
+     <meta charset="utf-8">
+     <title></title>
+   </head>
+   <body>
+     <header>
+       <!-- staple for navigatin -->
+       <nav>
+         <a href="/">Hi</a>
+         <a href="/gab">Post</a>
+         <a href="#">User:{{sessionName}}</a>
+         <a href="/login">Sign Out</a>
+       </nav>
+     </header>
+     <h1></h1>
+     <!-- throwing all info from model in -->
+     {{#model}}
+     <!-- the actual post -->
+     <div id="{{id}}" class="">
+       <p>{{users.username}}</p>
+       <p>{{message}}</p>
+       <a href="/likes/{{id}}">{{numberLikes}} Likes</a>
+       <!-- forget exactly what this is doing i need to ask chris i forget the point of hidden -->
+       <!-- but i think it is a way to take on the ID to the url  and to give the post ids -->
+       <div>
+         <form class="" action="/{{id}}" method="post">
+           <form class="like" action="/{{id}}" method="post">
+           <input type="hidden" name="id" value="{{id}}">
+           </form>
+       </div>
+       <div>
+         <form class="delete" action="/delete/{{id}}" method="post">
+           <input type="hidden" name="{{id}}" value="{{id}}">
+           <input type="submit" name="delete" value="delete">
+         </form>
+       </div>
+     </div>
+     {{/model}}
+   </body>
+ </html>
