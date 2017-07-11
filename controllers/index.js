@@ -23,7 +23,7 @@ module.exports = {
       ]
     }).then(function(gabpost){
       var context = {
-        model: Mailbox,
+        // model: Mailbox,
         sessionName: req.session.username,
         numberLikes: function() {
           models.Like.findAll(

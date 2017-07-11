@@ -13,7 +13,7 @@ module.exports = {
     var context = {
       sessionName: req.session.username
     };
-    res.render('gab', context);
+    res.render('index', context);
   },
 
   //displays the message
