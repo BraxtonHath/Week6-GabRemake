@@ -47,8 +47,8 @@ module.exports = {
           model: models.user,
           as: 'users'
         }],
-      }).then(function(mailbox) {
-        Mailbox.adduserLikes(req.session.userId);
+      }).then(function(Mailbox) {
+        Mailbox.addUserLikes(req.session.userId);
         res.redirect('/');
       });
 

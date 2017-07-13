@@ -24,9 +24,9 @@ module.exports = {
         as: 'users'
       }]
     }).then(function(mailbox) {
-      Mailbox.getuserLikes().then(function(result) {
+      mailbox.getUserLikes().then(function(result) {
         var context = {
-          model: mailboxes,
+          model: mailbox,
           name: req.session.name,
           loggedIn: true,
           signedIn: true,
