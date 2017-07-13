@@ -14,11 +14,9 @@
       <a href="/login">Sign Out</a>
     </nav>
   </header>
-  <h1>hello?</h1>
-
+<h1>Welcome to twitter knockoff</h1>
   {{#model}}
     <div id="{{id}}" class="">
-    <p> can i see this</p>
     <p>{{users.username}}</p>
     <p>{{message}}</p>
     {{#userLikes.length}}
@@ -30,7 +28,6 @@
     <!-- forget exactly what this is doing i need to ask chris i forget the point of hidden -->
     <!-- but i think it is a way to take on the ID to the url  and to give the post ids -->
     <div>
-      <p>hi?</p>
         <form class="" action="/{{id}}" method="post">
           <input type="hidden" name="id" value="{{id}}">
           <input type="submit" name="like" value="Like">

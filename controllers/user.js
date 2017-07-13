@@ -21,7 +21,7 @@ module.exports = {
   postG: function(req, res) {
     models.Mailbox.create({
       message: req.body.message,
-      // user_id: req.session.userId
+      user_id: req.session.userId
     }).then(function(newPost) {
       // req.session.message = newPost.message;
       // req.session.userId = newPost.id;

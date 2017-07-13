@@ -64,14 +64,14 @@ app.post('/signup', loginCon.signup);
 // sign in
 app.post('/signin', loginCon.signin);
 
-// post/like gab
-app.post('/:id', failedLogin, indexCon.likeClick);
-
 // gab
 app.post('/gabpost', failedLogin, userCon.postG);
 
 //delete
 app.post('/delete/:id', failedLogin, indexCon.deleteG);
+
+// post/like gab
+app.post('/:id', failedLogin, indexCon.likeClick);
 
 app.listen(3000, function(){
   console.log('Successfully initiated express application');

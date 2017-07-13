@@ -48,7 +48,7 @@ module.exports = {
           as: 'users'
         }],
       }).then(function(mailbox) {
-        Mailbox.othersLikes(req.session.userId);
+        Mailbox.adduserLikes(req.session.userId);
         res.redirect('/');
       });
 

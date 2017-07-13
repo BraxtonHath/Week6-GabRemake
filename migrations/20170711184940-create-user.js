@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      Username: {
+      username: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
@@ -17,7 +17,7 @@ module.exports = {
           }
         }
       },
-      Password: {
+      password: {
         type: Sequelize.STRING,
         allowNull: false
       },

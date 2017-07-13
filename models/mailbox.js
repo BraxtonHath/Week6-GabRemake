@@ -2,6 +2,7 @@
 module.exports = function(sequelize, DataTypes) {
   var Mailbox = sequelize.define('Mailbox', {
     message: DataTypes.STRING,
+    user_id: DataTypes.INTEGER
   },{});
 
   Mailbox.associate = function(models) {
