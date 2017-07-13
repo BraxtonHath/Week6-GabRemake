@@ -6,6 +6,7 @@ const path = require('path');
 const expressValidator = require('express-validator');
 const session = require('express-session');
 const models = require('../models');
+const Sequelize = require('sequelize');
 
 //render everything to do post messages
 module.exports = {
@@ -13,17 +14,18 @@ module.exports = {
     var context = {
       sessionName: req.session.username
     };
-    res.render('index', context);
+    res.render('gabpost', context);
   },
 
   //displays the message
   postG: function(req, res) {
     models.Mailbox.create({
-      message: req.body.status,
-      user_id: req.session.userId
-    }).then(function(newGab) {
-      req.session.newGab = newGab.status;
+      message: req.body.message,
+      // user_id: req.session.userId
+    }).then(function(newPost) {
+      // req.session.message = newPost.message;
+      // req.session.userId = newPost.id;
+      res.redirect('/');
     });
-    res.redirect('/');
   }
 };

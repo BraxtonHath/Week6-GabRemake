@@ -6,6 +6,7 @@ const path = require('path');
 const expressValidator = require('express-validator');
 const session = require('express-session');
 const models = require('../models');
+const Sequelize = require('sequelize');
 
 //everything to do with login
 module.exports = {
@@ -16,33 +17,51 @@ module.exports = {
   },
 
   //should add Username and password to the DB
-   signup: function(req, res) {
-    models.user.create({
-      username: req.body.username,
-      password: req.body.password,
-    }).then(function(newUser) {
-      req.session.username = newUser.username;
-      req.session.userId = newUser.id;
-       console.log('signup username', req.session.username);
-       console.log('signup id', req.session.userId);
-      res.redirect('/');
-    });
+  signup: function(req, res) {
+    if (req.body.username && req.body.password) {
+      models.user.create({
+        username: req.body.username,
+        password: req.body.password
+      }).then(function(newUser) {
+        req.session.username = newUser.username;
+        req.session.userId = newUser.id;
+        res.redirect('/');
+      }).catch(Sequelize.UniqueConstraintError, function(error) {
+        var context= {
+          msg: error.message
+        };
+        res.render('login', context);
+      }).catch(Sequelize.ValidationError, function(error) {
+        var context = {
+          msg: error.message
+        };
+        res.render('login', context);
+      });
+    } else if (!req.body.username || !req.body.password) {
+      var context = {
+        msg: 'not in DB'
+      };
+      res.render('login', context);
+    }
   },
-
-  //should look at the DB and check if the info matches
-   signin: function(req, res) {
-    var signin_username = req.body.username;
-    var signin_password = req.body.password;
-    models.user.findOne(
-      {where: {
-        username: signin_username,
-        password: signin_password
-      }
-    }).then(function(user) {
-      req.session.username = user.username;
-      req.session.userId = user.id;
-      //  console.log('sign in', req.session.username);
-      res.redirect('/');
-    });
+  signin: function(req, res) {
+    if (req.body.username && req.body.password) {
+      var signin_username = req.body.username;
+      var signin_password = req.body.password;
+      models.user.findOne(
+        {where: {
+          username: signin_username
+        }
+      }).then(function(user) {
+        req.session.username = user.username;
+        req.session.userId = user.id;
+        res.redirect('/');
+      });
+    } else if (!req.body.username || !req.body.password) {
+      var context = {
+        msg: 'not in DB1'
+      };
+      res.render('login', context);
+    }
   }
 };

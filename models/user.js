@@ -6,10 +6,9 @@ module.exports = function(sequelize, DataTypes) {
   }, {});
 
   user.associate = function(models) {
-    user.hasMany(models.Mailbox, {as: 'message', foreignKey: 'user_id'});
-    user.belongsToMany(models.Like, {as: 'users', through: 'Likes', foreignKey: 'user_id'});
+    user.hasMany(models.Mailbox, {as: 'message', foreignKey: 'user_id', onDelete: 'cascade', hooks: true});
+    user.belongsToMany(models.Mailbox, {as: 'MailboxLikes', through: 'Likes', foreignKey: 'user_id', onDelete: 'cascade', hooks: true});
   };
-
 
 
   return user;

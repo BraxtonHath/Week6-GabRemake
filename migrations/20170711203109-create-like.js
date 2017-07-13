@@ -20,7 +20,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Mailboxs',
+          model: 'Mailboxes',
           key: 'id'
         }
       },

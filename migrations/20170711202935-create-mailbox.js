@@ -10,7 +10,6 @@ module.exports = {
       },
       message: {
         type: Sequelize.STRING,
-        allowNull: false
       },
       user_id: {
         type: Sequelize.INTEGER,

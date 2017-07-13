@@ -9,10 +9,17 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       Username: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          isAlpha: {
+            msg: 'String'
+          }
+        }
       },
       Password: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

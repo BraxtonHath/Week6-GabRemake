@@ -6,11 +6,12 @@ const path = require('path');
 const expressValidator = require('express-validator');
 const session = require('express-session');
 const models = require('./models');
+const Sequelize = require('sequelize');
 
-const loginCon = require('./controllers/login');
-const userCon = require('./controllers/user');
-const indexCon = require('./controllers/index');
-const likeCon = require('./controllers/likes');
+const loginCon = require('./controllers/login.js');
+const userCon = require('./controllers/user.js');
+const indexCon = require('./controllers/index.js');
+const likeCon = require('./controllers/likes.js');
 
 const app = express();
 
@@ -38,8 +39,6 @@ app.use(session({
 // sends back to login
 var failedLogin = function(req, res, next) {
   var pathname = parseurl(req).pathname;
-  console.log(req.session.username);
-  console.log(pathname);
   if (!req.session.username && pathname != '/login') {
     res.redirect('/login');
   } else {
@@ -57,7 +56,7 @@ app.get('/login', loginCon.renderLog);
 app.get('/gabpost', failedLogin, userCon.renderG);
 
 //like page
-app.get('/likes/:id', failedLogin, likeCon.renderGL);
+app.get('/like/:id', failedLogin, likeCon.showLikes);
 
 // sign up
 app.post('/signup', loginCon.signup);
@@ -69,7 +68,7 @@ app.post('/signin', loginCon.signin);
 app.post('/:id', failedLogin, indexCon.likeClick);
 
 // gab
-app.post('/gabpost', userCon.postG);
+app.post('/gabpost', failedLogin, userCon.postG);
 
 //delete
 app.post('/delete/:id', failedLogin, indexCon.deleteG);

@@ -6,61 +6,64 @@ const path = require('path');
 const expressValidator = require('express-validator');
 const session = require('express-session');
 const models = require('../models');
+const Sequelize = require('sequelize');
+
+const app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+
 
 //should likes and post
 module.exports = {
   renderI: function(req, res) {
+    var context = {
+      loggedIn: true,
+      name: req.session.username,
+      signedIn: true,
+      loggedInUser: req.session.userId,
+      modelArray:[]
+    };
     models.Mailbox.findAll({
       include: [
         {
           model: models.user,
           as: 'users'
-        } ,
-        {
-          model: models.Like,
-          as: 'likes'
-        }
-      ]
-    }).then(function(gabpost){
-      var context = {
-        // model: Mailbox,
-        sessionName: req.session.username,
-        numberLikes: function() {
-          models.Like.findAll(
-            { where: {gab_id: req.body.id} }
-          ).then (function(likes) {
-            var numbLikes = likes.length;
-            // console.log(numbLikes);
-            return numbLikes;
-          });
-        }
-      };
-      res.render('index', context);
-    });
-  },
+        },
+        'userLikes'],
+        order: [['createdAt', 'DESC']]
+      }).then(function(mailbox){
+        context.model = mailbox;
 
-   //creates the likes on the table
-  likeClick: function(req, res) {
-    models.Like.create({
-      user_id: req.session.userId,
-      gab_id: req.params.id
-    }).then(function(likepost) {
-      res.redirect('/');
-    });
+        res.render('index', context);
+      });
+    },
 
-  },
+    //creates the likes on the table
+    likeClick: function(req, res) {
+      models.Mailbox.findOne(
+        {where: {id: req.params.id},
+        include: [{
+          model: models.user,
+          as: 'users'
+        }],
+      }).then(function(mailbox) {
+        Mailbox.othersLikes(req.session.userId);
+        res.redirect('/');
+      });
 
-  //should delete a post
-  deleteG: function(req, res) {
-    models.Like.destroy({
-      where: { gab_id: req.params.id}
-    }).then(function(){
+    },
+
+    //should delete a post
+    deleteG: function(req, res) {
       models.Mailbox.destroy(
         {
-          where: { id: req.params.id }
+          where: {
+            id: req.params.id,
+            user_id: req.session.userId
+          }
         }).then(function() {
           res.redirect('/');
         });
-      });
-    }
-  };
+      }
+    };

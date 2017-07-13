@@ -1,13 +1,31 @@
 <!DOCTYPE html>
- <html>
-   <head>
-     <meta charset="utf-8">
-     <title></title>
-   </head>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>3</title>
+</head>
 <body>
-  <h1>likes</h1>
-    <div class="">
-      <p>{{Mailbox.message}}</p>
-    </div>
+  <nav>
+    <a href="/">Hi</a>
+    <a href="/gabpost">Post</a>
+    <a href="#">User:{{sessionName}}</a>
+    <a href="/login">Sign Out</a>
+  </nav>
+  <div class="">
+    {{#model}}
+    <h3>{{users.username}}: {{message}}</h3>
+    <p>{{createdAt}}</p>
+    <p>People who liked this are </p>
+    {{/model}}
+    {{#likes}}
+    <ul>
+      <li>{{.}}</li>
+    </ul>
+    {{/likes}}
+    {{^likes}}
+    <p>No likes yet</p>
+    {{/likes}}
+  </div>
+  <!--test3-->
 </body>
 </html>
